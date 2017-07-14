@@ -10,8 +10,9 @@ class State:
     def __init__(self):
         self.init_scene(State.S_MENU)
         self.running = True
-        self.clock = pygame.time.Clock()
-        self.screen = pygame.display.get_surface()
+        self.clock   = pygame.time.Clock()
+        self.screen  = pygame.display.get_surface()
+        self.keys    = None
 
     def init_scene(self, scene_code):
         if scene_code == State.S_MENU:
@@ -36,3 +37,17 @@ class State:
 
     def get_screen(self):
         return self.screen
+
+    def reset_screen(self):
+        self.screen.fill(pygame.Color("black"))
+
+    def load_keys(self):
+        self.events = pygame.event.get()
+        self.keys = pygame.key.get_pressed()
+
+    def exit_conditions(self):
+        for event in self.events:
+            if ((event.type == pygame.QUIT) or
+                (self.keys[pygame.K_ESCAPE])):
+                return True
+        return False

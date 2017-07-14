@@ -27,14 +27,14 @@ class PyPong:
         pygame.quit()
 
     def check_exit(self):
-        for event in pygame.event.get():
-            if ((event.type == pygame.QUIT) or
-                (event.type == KEYDOWN and event.key == K_ESCAPE)):
-                self.state.stop_running()
+        if self.state.exit_conditions():
+            self.state.stop_running()
 
     def run(self):
         while self.state.is_running():
+            self.state.load_keys()
             self.state.clock_tick(self.fps)
+            self.state.reset_screen()
             nscene = self.state.scene_loop(self.state)
             pygame.display.flip()
             self.check_exit()
