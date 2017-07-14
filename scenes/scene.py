@@ -1,18 +1,15 @@
 class Scene():
 
-    def get_name(self):
+    def loop(self, state):
+        self.check_inputs(state)
+        self.update(state)
+        self.draw(state)
+
+    def check_inputs(self, state):
         pass
 
-    def loop(self):
-        self.check_inputs()
-        self.update()
-        self.draw()
-
-    def check_inputs(self):
+    def update(self, state):
         pass
 
-    def update(self):
-        pass
-
-    def draw(self):
+    def draw(self, state):
         pass

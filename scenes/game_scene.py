@@ -1,12 +1,9 @@
 import pygame
-from scene import Scene
+from scenes.scene import Scene
 
 class Game_scene(Scene):
 
-    def get_name(self);
-        return ("game")
-
-    def loop(self):
+    def loop_step(self):
         self.check_inputs()
         self.update()
         self.draw()

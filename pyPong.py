@@ -1,6 +1,7 @@
+import os
 import pygame
 from pygame.locals import *
-from menu import Menu
+from scenes.menu import Menu
 from state import State
 
 CAPTION = 'PY-PONG'
@@ -27,19 +28,16 @@ class PyPong:
 
     def check_exit(self):
         for event in pygame.event.get():
-            if (event.type == pygame.QUIT) or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                self.state['running'] = False
+            if ((event.type == pygame.QUIT) or
+                (event.type == KEYDOWN and event.key == K_ESCAPE)):
+                self.state.stop_running()
 
     def run(self):
-        while self.state['runnig']:
-            self.clock.tick(self.fps)
-            nscene = self.scene.loop(state)
-
-            if nscene is not None and nscene != self.scene.get_name() :
-                self.load_new_scene()
-
+        while self.state.is_running():
+            self.state.clock_tick(self.fps)
+            nscene = self.state.scene_loop(self.state)
+            pygame.display.flip()
             self.check_exit()
-
         self.general_game_end()
 
 
