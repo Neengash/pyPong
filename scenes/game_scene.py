@@ -1,14 +1,10 @@
 import pygame
-import scene
+from scene import Scene
 
-class Menu(Scene):
+class Game_scene(Scene):
 
-    selected_element = 0
-
-    elements = [
-        'Start'
-        'Quit'
-    ]
+    def get_name(self);
+        return ("game")
 
     def loop(self):
         self.check_inputs()
