@@ -38,9 +38,12 @@ class Game_scene(Scene):
             actor.update(state)
 
     def draw(self, state):
-        self.draw_scenario()
+        self.draw_scenario(state)
         for actor in self.actors:
             actor.draw(state)
 
-    def draw_scenario(self):
-        pass
+    def draw_scenario(self, state):
+        screen = state.get_screen()
+        pygame.draw.line(screen, (255, 255, 255),
+            (screen.get_rect().width / 2, 0),
+            (screen.get_rect().width / 2, screen.get_rect().height))
