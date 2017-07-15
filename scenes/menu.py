@@ -15,6 +15,7 @@ class Menu(Scene):
     menu_state = {
         'up'   : False,
         'down' : False,
+        'action' : False,
     }
 
     def __init__(self):
@@ -32,17 +33,19 @@ class Menu(Scene):
         self.menu_state = {
             'up'   : False,
             'down' : False,
+            'action' : False,
         }
 
     def check_inputs(self, state):
         for event in state.get_loop_events():
-            print("Event = {}".format(event))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            if self.check_key(event, pygame.K_DOWN):
                 self.menu_state['down'] = True
                 self.last_update = datetime.datetime.now()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            elif self.check_key(event, pygame.K_UP):
                 self.menu_state['up'] = True
                 self.last_update = datetime.datetime.now()
+            elif self.check_key(event, pygame.K_RETURN):
+                self.menu_state['action'] = True
 
         if not any(list(self.menu_state.values())):
             if state.keys[pygame.K_DOWN] and self.enough_time_for_update():
@@ -50,6 +53,9 @@ class Menu(Scene):
                 self.menu_state['down'] = True
             elif state.keys[pygame.K_UP] and self.enough_time_for_update():
                 self.menu_state['up'] = True
+
+    def check_key(self, event, key):
+        return event.type == pygame.KEYDOWN and event.key == key
 
     def enough_time_for_update(self):
         if self.last_update == None:
@@ -63,35 +69,25 @@ class Menu(Scene):
                 return True
         return False
 
-    def switch_current_element(self):
-        if self.last_update == None:
-            self.last_update = datetime.datetime.now()
-        else:
-            now = datetime.datetime.now()
-            diference = now - self.last_update
-            if diference.microseconds < 250000:
-                return None
-            self.last_update = now
-
-        if self.current_element == Menu.E_START:
-            self.current_element = Menu.E_QUIT
-        else:
-            self.current_element = Menu.E_START
-
     def update(self, state):
-        if all(list(self.menu_state.values())):
-            return
-
-        if self.menu_state['down']:
+        if self.menu_state['action']:
+            if self.current_element == Menu.E_START:
+                pass
+            elif self.current_element == Menu.E_QUIT:
+                state.stop_running()
+        elif self.menu_state['down']:
             new_elem = self.current_element + 1
             if new_elem not in self.menu_options:
                 new_elem = list(self.menu_options)[0]
             self.current_element = new_elem
-        if self.menu_state['up']:
+        elif self.menu_state['up']:
             new_elem = self.current_element - 1
             if new_elem not in self.menu_options:
                 new_elem = list(self.menu_options)[-1]
             self.current_element = new_elem
+
+    def get_state_arrow_values(self):
+        return list(self.menu_state.values())[0:2]
 
     def draw(self, state):
         screen = state.get_screen()
