@@ -1,10 +1,13 @@
 import pygame
+import random
 from actors.actor import Actor
 
 class Ball(Actor):
 
     width = 10
     height = 10
+    base_x_speed = 5
+    base_y_speed = 4
     ball_state = {}
 
     def __init__(self, state):
@@ -28,11 +31,11 @@ class Ball(Actor):
         self.posy += self.vely
 
         screen_height = self.state.get_screen().get_rect().height
-        if self.posy < 0 + 1/2 * self.height:
+        if self.posy < 0:
             self.posy = 1/2 * self.height
             self.vely = - self.vely
-        elif self.posy > screen_height - self.height / 2:
-            self.posy = screen_heiht - self.height / 2
+        elif self.posy > screen_height - self.height:
+            self.posy = screen_height - self.height
             self.vely = - self.vely
 
     def draw(self):
@@ -49,3 +52,15 @@ class Ball(Actor):
 
     def check_out_right(self):
         return self.posx > self.state.get_screen().get_rect().width
+
+    def set_ball_for_player(self, player):
+        if player == 1:
+            self.posx = 30
+            self.posy = self.state.get_screen().get_rect().height / 2
+            self.velx = 5
+            self.vely = random.randint(-self.base_y_speed, self.base_y_speed)
+        else:
+            self.posx = self.state.get_screen().get_rect().width - 30 - self.width
+            self.posy = self.state.get_screen().get_rect().height / 2
+            self.velx = -5
+            self.vely = random.randint(-self.base_y_speed, self.base_y_speed)
