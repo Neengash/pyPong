@@ -16,6 +16,7 @@ class Game_scene(Scene):
         self.pause = False
         self.win = False
         self.score = [0, 0]
+        self.font = pygame.font.Font("foo_font.ttf", 50)
 
     # When more modes are allowed, this should be changed
     def get_actors_for_mode(self):
@@ -73,6 +74,7 @@ class Game_scene(Scene):
 
     def draw(self):
         self.draw_scenario()
+        self.draw_scoring()
         for actor in self.actors:
             actor.draw()
 
@@ -81,3 +83,15 @@ class Game_scene(Scene):
         pygame.draw.line(screen, (255, 255, 255),
             (screen.get_rect().width / 2, 0),
             (screen.get_rect().width / 2, screen.get_rect().height))
+
+    def draw_scoring(self):
+        screen = self.state.get_screen()
+        text = self.font.render(str(self.score[0]), 1, (255, 255, 255))
+        textpos = text.get_rect()
+        textpos.centerx = self.state.get_screen().get_rect().width / 2 - 50
+        screen.blit(text, textpos)
+
+        text = self.font.render(str(self.score[1]), 1, (255, 255, 255))
+        textpos = text.get_rect()
+        textpos.centerx = self.state.get_screen().get_rect().width / 2 + 50
+        screen.blit(text, textpos)
