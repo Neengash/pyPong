@@ -38,6 +38,37 @@ class Game_scene(Scene):
         for actor in self.actors:
             actor.update()
 
+            if isinstance(actor, Ball):
+                if actor.check_out_left():
+                    self.p2_score()
+                    self.actors.remove(actor)
+                    if not self.win:
+                        self.new_p1_ball()
+                elif actor.check_out_right():
+                    self.p1_score()
+                    self.actors.remove(actor)
+                    if not self.win:
+                        self.new_p2_ball()
+
+    def p1_score(self):
+        self.scores[0] += 1
+        if self.scores[0] == 9:
+            self.raise_win(1)
+
+    def p2_score(self):
+        self.scores[1] += 1
+        if self.scores[1] == 9:
+            self.raise_win(2)
+
+    def raise_win(player):
+        pass
+
+    def new_p1_ball(self):
+        pass
+
+    def new_p2_ball(self):
+        pass
+
     def draw(self):
         self.draw_scenario()
         for actor in self.actors:

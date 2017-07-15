@@ -43,3 +43,9 @@ class Ball(Actor):
             self.width,
             self.height
         ])
+
+    def check_out_left(self):
+        return self.posx + self.width < 0
+
+    def check_out_right(self):
+        return self.posx > self.state.get_screen().get_rect().width
