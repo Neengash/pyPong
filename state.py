@@ -13,6 +13,7 @@ class State:
         self.clock   = pygame.time.Clock()
         self.screen  = pygame.display.get_surface()
         self.keys    = None
+        self.events  = None
 
     def init_scene(self, scene_code):
         if scene_code == State.S_MENU:
@@ -44,6 +45,9 @@ class State:
     def load_keys(self):
         self.events = pygame.event.get()
         self.keys = pygame.key.get_pressed()
+
+    def get_loop_events(self):
+        return self.events
 
     def exit_conditions(self):
         for event in self.events:
