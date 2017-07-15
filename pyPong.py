@@ -14,7 +14,6 @@ class PyPong:
     def __init__(self):
         self.general_game_init()
         self.state = State()
-        self.fps = 60
 
     def general_game_init(self):
         # center the screen
@@ -33,9 +32,9 @@ class PyPong:
     def run(self):
         while self.state.is_running():
             self.state.load_inputs()
-            self.state.clock_tick(self.fps)
+            self.state.clock_tick(self.state.get_fps())
             self.state.reset_screen()
-            nscene = self.state.scene_loop(self.state)
+            nscene = self.state.scene_loop()
             pygame.display.flip()
             self.check_exit()
         self.general_game_end()

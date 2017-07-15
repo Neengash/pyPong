@@ -8,18 +8,16 @@ class State:
     S_GAME = 1
 
     def __init__(self):
-        self.init_scene(State.S_MENU)
+        self.init_menu()
         self.running = True
         self.clock   = pygame.time.Clock()
         self.screen  = pygame.display.get_surface()
         self.keys    = None
         self.events  = None
+        self.fps     = 60
 
-    def init_scene(self, scene_code):
-        if scene_code == State.S_MENU:
-            self.scene = Menu()
-        elif scene_code == State.S_GAME:
-            self.scene = Game(self.state, Game.M_2players)
+    def init_menu(self):
+        self.scene = Menu(self)
 
     def start_game(self):
         self.scene = Game(self, Game.M_2players)
@@ -33,8 +31,8 @@ class State:
     def is_running(self):
         return self.running
 
-    def scene_loop(self, state):
-        self.scene.loop_step(state)
+    def scene_loop(self):
+        self.scene.loop_step()
 
     def clock_tick(self, fps):
         self.clock.tick(fps)
@@ -61,3 +59,6 @@ class State:
                 (self.keys[pygame.K_ESCAPE])):
                 return True
         return False
+
+    def get_fps(self):
+        return self.fps

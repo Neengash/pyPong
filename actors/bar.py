@@ -9,7 +9,8 @@ class Bar(Actor):
     bar_state = {}
 
     def __init__(self, state, player):
-        screen_rect = state.get_screen().get_rect()
+        self.state = state
+        screen_rect = self.state.get_screen().get_rect()
         self.posx = self.get_player_posx(screen_rect, player)
         self.posy = screen_rect.top / 2
         self.reset_bar_state()
@@ -35,32 +36,32 @@ class Bar(Actor):
             'down' : False,
         }
 
-    def check_inputs(self, state):
+    def check_inputs(self):
         self.reset_bar_state()
-        if self.check_go_up(state):
+        if self.check_go_up():
             self.bar_state['up'] = True
-        if self.check_go_down(state):
+        if self.check_go_down():
             self.bar_state['down'] = True
 
-    def check_go_up(self, state):
+    def check_go_up(self):
         return (
-            state.get_keys()[self.key_up] and
+            self.state.get_keys()[self.key_up] and
             self.posy > 0
         )
 
-    def check_go_down(self, state):
+    def check_go_down(self):
         return (
-            state.get_keys()[self.key_down] and
-            self.posy < state.get_screen().get_rect().height - self.height
+            self.state.get_keys()[self.key_down] and
+            self.posy < self.state.get_screen().get_rect().height - self.height
         )
 
-    def update(self, state):
+    def update(self):
         if self.bar_state['up']:
             self.posy -= Bar.speed
         if self.bar_state['down']:
             self.posy += Bar.speed
 
-    def draw(self, state):
-        screen = state.get_screen()
+    def draw(self):
+        screen = self.state.get_screen()
         pygame.draw.rect(screen, (255, 255, 255),
             [self.posx, self.posy, self.width, self.height])
