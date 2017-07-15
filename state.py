@@ -1,5 +1,5 @@
 import pygame
-from scenes.game_scene import Game_scene as game
+from scenes.game_scene import Game_scene as Game
 from scenes.menu import Menu
 
 class State:
@@ -19,7 +19,7 @@ class State:
         if scene_code == State.S_MENU:
             self.scene = Menu()
         elif scene_code == State.S_GAME:
-            self.scene = Game()
+            self.scene = Game(Game.M_2players)
 
     def start_running(self):
         self.running = True
