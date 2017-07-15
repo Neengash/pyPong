@@ -22,7 +22,7 @@ class Game_scene(Scene):
         return [
             Bar(self.state, 1),
             Bar(self.state, 2),
-            #Ball(state),
+            Ball(self.state),
         ]
 
     def loop_step(self):
