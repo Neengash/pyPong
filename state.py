@@ -19,10 +19,10 @@ class State:
         if scene_code == State.S_MENU:
             self.scene = Menu()
         elif scene_code == State.S_GAME:
-            self.scene = Game(Game.M_2players)
+            self.scene = Game(self.state, Game.M_2players)
 
     def start_game(self):
-        self.scene = Game(Game.M_2players)
+        self.scene = Game(self, Game.M_2players)
 
     def start_running(self):
         self.running = True
@@ -51,6 +51,9 @@ class State:
 
     def get_loop_events(self):
         return self.events
+
+    def get_keys(self):
+        return self.keys
 
     def exit_conditions(self):
         for event in self.events:
