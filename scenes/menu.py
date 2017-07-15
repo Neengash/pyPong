@@ -71,7 +71,7 @@ class Menu(Scene):
     def update(self, state):
         if self.menu_state['action']:
             if self.current_element == Menu.E_START:
-                state.init_scene(state.S_GAME)
+                state.start_game()
             elif self.current_element == Menu.E_QUIT:
                 state.stop_running()
         elif self.menu_state['down']:

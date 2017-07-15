@@ -21,6 +21,9 @@ class State:
         elif scene_code == State.S_GAME:
             self.scene = Game(Game.M_2players)
 
+    def start_game(self):
+        self.scene = Game(Game.M_2players)
+
     def start_running(self):
         self.running = True
 
