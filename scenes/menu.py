@@ -49,7 +49,6 @@ class Menu(Scene):
 
         if not any(list(self.menu_state.values())):
             if state.keys[pygame.K_DOWN] and self.enough_time_for_update():
-                print("here")
                 self.menu_state['down'] = True
             elif state.keys[pygame.K_UP] and self.enough_time_for_update():
                 self.menu_state['up'] = True
@@ -72,7 +71,7 @@ class Menu(Scene):
     def update(self, state):
         if self.menu_state['action']:
             if self.current_element == Menu.E_START:
-                pass
+                state.init_scene(State.S_GAME)
             elif self.current_element == Menu.E_QUIT:
                 state.stop_running()
         elif self.menu_state['down']:
@@ -85,9 +84,6 @@ class Menu(Scene):
             if new_elem not in self.menu_options:
                 new_elem = list(self.menu_options)[-1]
             self.current_element = new_elem
-
-    def get_state_arrow_values(self):
-        return list(self.menu_state.values())[0:2]
 
     def draw(self, state):
         screen = state.get_screen()

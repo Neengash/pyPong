@@ -42,7 +42,7 @@ class State:
     def reset_screen(self):
         self.screen.fill(pygame.Color("black"))
 
-    def load_keys(self):
+    def load_inputs(self):
         self.events = pygame.event.get()
         self.keys = pygame.key.get_pressed()
 

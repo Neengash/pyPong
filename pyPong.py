@@ -32,7 +32,7 @@ class PyPong:
 
     def run(self):
         while self.state.is_running():
-            self.state.load_keys()
+            self.state.load_inputs()
             self.state.clock_tick(self.fps)
             self.state.reset_screen()
             nscene = self.state.scene_loop(self.state)
