@@ -1,6 +1,7 @@
 import pygame
 import random
 from actors.actor import Actor
+from actors.bar import Bar
 
 class Ball(Actor):
 
@@ -64,3 +65,27 @@ class Ball(Actor):
             self.posy = self.state.get_screen().get_rect().height / 2
             self.velx = -5
             self.vely = random.randint(-self.base_y_speed, self.base_y_speed)
+
+    def check_and_resolve_collisions(self, actors):
+        for actor in actors:
+            if isinstance(actor, Bar):
+                if self.check_collision(actor):
+                    self.resolve_collision(actor)
+
+    def check_collision(self, actor):
+        return (
+            self.posx + self.width > actor.posx and
+            self.posx < actor.posx + actor.width and
+            self.posy + self.height > actor.posy and
+            self.posy < actor.posy + actor.height
+        )
+
+    def resolve_collision(self, actor):
+        if self.velx > 0:
+            self.posx = actor.posx - self.width
+            self.velx = -self.velx + random.randint(-1, 1)
+            self.vely += random.randint(-2, 2)
+        else:
+            self.posx = actor.posx + actor.width
+            self.velx = -self.velx + random.randint(-1, 1)
+            self.vely += random.randint(-2, 2)

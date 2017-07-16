@@ -15,6 +15,7 @@ class Game_scene(Scene):
         self.actors = self.get_actors_for_mode()
         self.pause = False
         self.win = False
+        self.winner = None
         self.score = [0, 0]
         self.font = pygame.font.Font("foo_font.ttf", 50)
 
@@ -32,8 +33,17 @@ class Game_scene(Scene):
         self.draw()
 
     def check_inputs(self):
+        if self.win:
+            if self.check_reset():
+                self.state.start_game()
         for actor in self.actors:
             actor.check_inputs()
+
+    def check_reset(self):
+        for event in self.state.get_loop_events():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                return True
+        return False
 
     def update(self):
         ball_scored = 0
@@ -49,9 +59,10 @@ class Game_scene(Scene):
                     self.p1_score()
                     self.actors.remove(actor)
                     ball_scored = 1
+                else:
+                    actor.check_and_resolve_collisions(self.actors)
         if ball_scored and not self.win:
-            # IF player 2 scored new ball is for player 1
-            # And viceversa.
+            # IF player 2 scored new ball is for player 1 and viceversa.
             self.new_ball(1 if ball_scored == 2 else 2)
 
     def p1_score(self):
@@ -65,7 +76,8 @@ class Game_scene(Scene):
             self.raise_win(2)
 
     def raise_win(self, player):
-        print("player {} wins".format(player))
+        self.win = True
+        self.winner = player
 
     def new_ball(self, player):
         ball = Ball(self.state)
@@ -75,6 +87,8 @@ class Game_scene(Scene):
     def draw(self):
         self.draw_scenario()
         self.draw_scoring()
+        if self.win:
+            self.draw_win()
         for actor in self.actors:
             actor.draw()
 
@@ -94,4 +108,12 @@ class Game_scene(Scene):
         text = self.font.render(str(self.score[1]), 1, (255, 255, 255))
         textpos = text.get_rect()
         textpos.centerx = self.state.get_screen().get_rect().width / 2 + 50
+        screen.blit(text, textpos)
+
+    def draw_win(self):
+        screen = self.state.get_screen()
+        text = self.font.render("Player {} wins".format(self.winner), 1, (255, 255, 255))
+        textpos = text.get_rect()
+        textpos.centerx = self.state.get_screen().get_rect().width / 2
+        textpos.centery = self.state.get_screen().get_rect().height / 2
         screen.blit(text, textpos)
