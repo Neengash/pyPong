@@ -8,8 +8,8 @@ CAPTION = 'PY-PONG'
 
 class PyPong:
 
-    WIDTH = 640
-    HEIGHT = 480
+    WIDTH = 1280
+    HEIGHT = 720
 
     def __init__(self):
         self.general_game_init()
