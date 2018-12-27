@@ -12,17 +12,17 @@ class PyPong:
     HEIGHT = 720
 
     def __init__(self):
-        self.general_game_init()
+        self.game_init()
         self.state = State()
 
-    def general_game_init(self):
+    def game_init(self):
         # center the screen
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
         pygame.display.set_mode([self.WIDTH, self.HEIGHT])
         pygame.display.set_caption(CAPTION)
 
-    def general_game_end(self):
+    def game_end(self):
         pygame.quit()
 
     def check_exit(self):
@@ -37,7 +37,7 @@ class PyPong:
             self.state.scene_loop()
             pygame.display.flip()
             self.check_exit()
-        self.general_game_end()
+        self.game_end()
 
 
 if __name__ == '__main__':
