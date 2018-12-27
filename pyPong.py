@@ -8,8 +8,8 @@ CAPTION = 'PY-PONG'
 
 class PyPong:
 
-    width = 640
-    height = 480
+    WIDTH = 640
+    HEIGHT = 480
 
     def __init__(self):
         self.general_game_init()
@@ -19,7 +19,7 @@ class PyPong:
         # center the screen
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
-        pygame.display.set_mode([self.width, self.height])
+        pygame.display.set_mode([self.WIDTH, self.HEIGHT])
         pygame.display.set_caption(CAPTION)
 
     def general_game_end(self):
