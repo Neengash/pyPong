@@ -7,6 +7,8 @@ class Menu(Scene):
     E_START = 0
     E_QUIT = 1
 
+    TIME_TO_REACTIVATE = 250000
+
     menu_options = {
         E_START : 'Start',
         E_QUIT  : 'Quit',
@@ -48,24 +50,23 @@ class Menu(Scene):
                 self.menu_state['action'] = True
 
         if not any(list(self.menu_state.values())):
-            if self.state.keys[pygame.K_DOWN] and self.enough_time_for_update():
+            now = datetime.datetime.now()
+            if self.state.keys[pygame.K_DOWN] and self.time_to_reactivate(now):
                 self.menu_state['down'] = True
-            elif self.state.keys[pygame.K_UP] and self.enough_time_for_update():
+            elif self.state.keys[pygame.K_UP] and self.time_to_reactivate(now):
                 self.menu_state['up'] = True
 
     def check_key(self, event, key):
         return event.type == pygame.KEYDOWN and event.key == key
 
-    def enough_time_for_update(self):
-        if self.last_update == None:
-            self.last_update = datetime.datetime.now()
-            return False
-        else:
-            now = datetime.datetime.now()
-            diference = now - self.last_update
-            if diference.microseconds >= 250000:
-                self.last_update = now
-                return True
+    def time_to_reactivate(self, now):
+        if not self.last_update:
+            self.last_update = now
+            return false
+
+        if (now - self.last_update) >= self.TIME_TO_REACTIVATE:
+            self.last_update = now
+            return True
         return False
 
     def update(self):
