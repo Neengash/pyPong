@@ -71,20 +71,29 @@ class Menu(Scene):
 
     def update(self):
         if self.menu_state['action']:
-            if self.current_element == Menu.E_START:
-                self.state.start_game()
-            elif self.current_element == Menu.E_QUIT:
-                self.state.stop_running()
+            self.do_action()
         elif self.menu_state['down']:
-            new_elem = self.current_element + 1
-            if new_elem not in self.menu_options:
-                new_elem = list(self.menu_options)[0]
-            self.current_element = new_elem
+            self.go_down()
         elif self.menu_state['up']:
-            new_elem = self.current_element - 1
-            if new_elem not in self.menu_options:
-                new_elem = list(self.menu_options)[-1]
-            self.current_element = new_elem
+            self.go_up()
+
+    def do_action(self):
+        if self.current_element == Menu.E_START:
+            self.state.start_game()
+        elif self.current_element == Menu.E_QUIT:
+            self.state.stop_running()
+
+    def go_down(self):
+        new_elem = self.current_element + 1
+        if new_elem not in self.menu_options:
+            new_elem = list(self.menu_options)[0]
+        self.current_element = new_elem
+
+    def go_up(self):
+        new_elem = self.current_element - 1
+        if new_elem not in self.menu_options:
+            new_elem = list(self.menu_options)[-1]
+        self.current_element = new_elem
 
     def draw(self):
         screen = self.state.get_screen()
