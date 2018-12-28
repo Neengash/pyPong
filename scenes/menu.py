@@ -62,9 +62,9 @@ class Menu(Scene):
     def time_to_reactivate(self, now):
         if not self.last_update:
             self.last_update = now
-            return false
+            return False
 
-        if (now - self.last_update) >= self.TIME_TO_REACTIVATE:
+        if (now - self.last_update).microseconds >= self.TIME_TO_REACTIVATE:
             self.last_update = now
             return True
         return False
