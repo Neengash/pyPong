@@ -17,10 +17,11 @@ class Bar(Actor):
         self.set_movement_keys(player)
 
     def get_player_posx(self, screen_rect, player):
+        base_separation = self.width / 2
         if player == 1:
-            return screen_rect.left + self.width / 2
+            return screen_rect.left + base_separation
         elif player == 2:
-            return screen_rect.right - self.width * 3 / 2
+            return screen_rect.right - self.width - base_separation
 
     def set_movement_keys(self, player):
         if player == 1:
