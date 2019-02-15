@@ -12,7 +12,7 @@ class Bar(Actor):
         self.state = state
         screen_rect = self.state.get_screen().get_rect()
         self.posx = self.get_player_posx(screen_rect, player)
-        self.posy = screen_rect.top / 2
+        self.posy = (screen_rect.bottom / 2) - self.width / 2
         self.reset_bar_state()
         self.set_movement_keys(player)
 
