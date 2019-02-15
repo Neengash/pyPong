@@ -52,7 +52,7 @@ class Ball(Actor):
         return self.posx + self.width < 0
 
     def check_out_right(self):
-        return self.posx > self.state.get_screen().get_rect().width
+        return self.posx > (self.state.get_screen().get_rect().width + self.width)
 
     def set_ball_for_player(self, player):
         if player == 1:
