@@ -1,6 +1,7 @@
 import pygame
 import random
 from actors.actor import Actor
+from drawers.ball_drawer import BallDrawer
 from actors.bar import Bar
 
 class Ball(Actor):
@@ -11,19 +12,18 @@ class Ball(Actor):
     base_y_speed = 4
     ball_state = {}
 
-    def __init__(self, state):
-        self.state = state
-        screen_rect = self.state.get_screen().get_rect()
-        self.posx = screen_rect.width / 2 - self.width
-        self.posy = screen_rect.height / 2 - self.height
+    def __init__(self, posx, posy, ball_drawer):
+        self.posx = posx
+        self.posy = posy
         self.velx = 0
         self.vely = 0
+        self.drawer = ball_drawer
 
     # Just needed for when the ball is not moving and have to
     # start the game.
-    def check_inputs(self):
+    def check_inputs(self, keys):
         if self.velx == 0 and self.vely == 0:
-            if self.state.get_keys()[pygame.K_SPACE]:
+            if keys[pygame.K_SPACE]:
                 self.velx = 5
 
     def update(self):
@@ -40,13 +40,12 @@ class Ball(Actor):
             self.vely = - self.vely
 
     def draw(self):
-        screen = self.state.get_screen()
-        pygame.draw.rect(screen, (255, 255, 255), [
-            self.posx + self.width / 2,
-            self.posy + self.height / 2,
+        self.drawer.draw(
+            self.posx, 
+            self.posy,
             self.width,
             self.height
-        ])
+        )
 
     def check_out_left(self):
         return self.posx + self.width < 0

@@ -21,10 +21,13 @@ class Game_scene(Scene):
 
     # When more modes are allowed, this should be changed
     def get_actors_for_mode(self):
+        screen_rect = self.state.get_screen().get_rect()
+        ball_starting_xpos = screen_rect.width / 2
+        ball_starting_ypos = screen_rect.height / 2
         return [
             Bar(self.state, 1),
             Bar(self.state, 2),
-            Ball(self.state),
+            Ball(ball_starting_xpos, ball_starting_ypos),
         ]
 
     def loop_step(self):
@@ -37,7 +40,7 @@ class Game_scene(Scene):
             if self.check_reset():
                 self.state.start_game()
         for actor in self.actors:
-            actor.check_inputs()
+            actor.check_inputs(self.state.get_keys())
 
     def check_reset(self):
         for event in self.state.get_loop_events():
