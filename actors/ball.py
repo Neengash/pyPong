@@ -11,13 +11,16 @@ class Ball(Actor):
     base_x_speed = 5
     base_y_speed = 4
     ball_state = {}
+    drawer = None
+    body = None
 
-    def __init__(self, posx, posy, ball_drawer):
+    def __init__(self, posx, posy, ball_drawer, ball_body):
         self.posx = posx
         self.posy = posy
         self.velx = 0
         self.vely = 0
         self.drawer = ball_drawer
+        self.body = ball_body
 
     # Just needed for when the ball is not moving and have to
     # start the game.
