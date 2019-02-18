@@ -37,22 +37,21 @@ class Bar(Actor):
             'down' : False,
         }
 
-    def check_inputs(self):
+    def check_inputs(self, keys):
         self.reset_bar_state()
-        if self.check_go_up():
+        if self.check_go_up(keys):
             self.bar_state['up'] = True
-        if self.check_go_down():
+        if self.check_go_down(keys):
             self.bar_state['down'] = True
 
-    def check_go_up(self):
+    def check_go_up(self, keys):
         return (
-            self.state.get_keys()[self.key_up] and
-            self.posy > 0
+            keys[self.key_up] and self.posy > 0
         )
 
-    def check_go_down(self):
+    def check_go_down(self, keys):
         return (
-            self.state.get_keys()[self.key_down] and
+            keys[self.key_down] and
             self.posy < self.state.get_screen().get_rect().height - self.height
         )
 
