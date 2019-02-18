@@ -1,6 +1,6 @@
 import pygame
-from actors.actor import Actor
-from drawers.bar_drawer import BarDrawer
+from .actor import Actor
+from ..drawers.bar_drawer import BarDrawer
 
 class Bar(Actor):
 
