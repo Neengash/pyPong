@@ -18,6 +18,7 @@ class Game_scene(Scene):
         self.winner = None
         self.score = [0, 0]
         self.font = pygame.font.Font("foo_font.ttf", 50)
+        self.paused = True
 
     # When more modes are allowed, this should be changed
     def get_actors_for_mode(self):
@@ -36,6 +37,19 @@ class Game_scene(Scene):
         self.draw()
 
     def check_inputs(self):
+        if self.paused:
+            self.check_start_condition()
+        else:
+            self.do_game_checks()
+    
+    def check_start_condition(self)
+        if self.state.get_keys()[pygame.K_SPACE]:
+            self.paused = False
+            for actor in self.actors:
+                if type(actor) is Ball:
+                    actor.start()
+
+    def do_game_checks(self)
         if self.win:
             if self.check_reset():
                 self.state.start_game()
